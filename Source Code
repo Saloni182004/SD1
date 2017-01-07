@@ -1,0 +1,98 @@
+import math
+
+
+class Complex(object):
+
+    #Method for initializing the complex number to imaginary and real parts
+    def __init__(self, real, imaginary):
+        self.real = real
+        self.imaginary = imaginary
+
+    #Method for adding the two complex number properly
+    def __add__(self, no):
+        return Complex(self.real + no.real, self.imaginary + no.imaginary)
+
+    #Method for subtracting the two complex number properly
+    def __sub__(self, no):
+        return Complex(self.real - no.real, self.imaginary - no.imaginary)
+
+    # Method for multiplying the two complex number properly
+    def __mul__(self, no):
+        return Complex(((self.real * no.real) + (self.imaginary * no.imaginary * -1)),
+                       ((self.imaginary * no.real) + (self.real * no.imaginary)))
+
+    # Method for dividing the two complex number properly
+    def __div__(self, no):
+        return Complex((((self.real * no.real) + (self.imaginary * no.imaginary * -1 * -1)) / (
+        (no.real * no.real) + (no.imaginary * no.real) + (no.imaginary * no.real * -1) + (
+        no.imaginary * no.imaginary * -1 * -1))), (((self.imaginary * no.real) + (self.real * no.imaginary * -1)) / (
+        (no.real * no.real) + (no.imaginary * no.real) + (no.imaginary * no.real * -1) + (
+        no.imaginary * no.imaginary * -1 * -1))))
+
+    # Method for determing the modulus of the complex number properly
+    def mod(self):
+        return Complex(pow(self.real ** 2 + self.imaginary ** 2, 0.5), 0)
+
+    #Method for printing out the resulting complex number properly
+    def __str__(self):
+        if self.imaginary == 0:
+            result = "%.2f+0.00i" % (self.real)
+        elif self.real == 0:
+            if self.imaginary >= 0:
+                result = "0.00+%.2fi" % (self.imaginary)
+            else:
+                result = "0.00-%.2fi" % (abs(self.imaginary))
+        elif self.imaginary > 0:
+            result = "%.2f+%.2fi" % (self.real, self.imaginary)
+        else:
+            result = "%.2f-%.2fi" % (self.real, abs(self.imaginary))
+        return result
+
+
+if __name__ == '__main__':
+
+    print("Enter the complex number in the format: r i; where r is the real number followed by a space then the imaginary number i")
+
+    print("Enter the first complex number")
+    c = map(float, raw_input().split())
+    #While loop for the user to enter the complex number correctly
+    while len(c)!=2:
+        print("Enter the complex number properly in the format: r i.")
+        c = map(float, raw_input().split())
+
+    print("Enter the second complex number")
+    d = map(float, raw_input().split())
+    # While loop for the user to enter the complex number correctly
+    while len(d) != 2:
+        print("Enter the complex number properly in the format: r i.")
+        d = map(float, raw_input().split())
+
+    x = Complex(*c)
+    y = Complex(*d)
+
+    print(" ")
+    print("The two complex number added together are: ")
+    print(str(x+y))
+
+    print(" ")
+    print("The two complex number subtracted together are: ")
+    print(str(x-y))
+
+    print(" ")
+    print("The two complex number multiplied together are: ")
+    print(str(x*y))
+
+    print(" ")
+    print("The first complex number divided by the second complex number is: ")
+    print(str(x/y))
+
+    print(" ")
+    print("The modulus of the first complex number is: ")
+    print(str(x.mod()))
+
+    print(" ")
+    print("The modulus of the second complex number is: ")
+    print(str(y.mod()))
+
+    #lineEnd='\n'
+    #print lineEnd.join(map(str, [x+y, x-y, x*y, x/y, x.mod(), y.mod()]))
